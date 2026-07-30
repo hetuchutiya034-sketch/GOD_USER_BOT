@@ -1,18 +1,38 @@
-from pyrogram import Client
-from config import API_ID, API_HASH, SESSION
+import asyncio
+from pyrogram import idle
+from core.clients import user, bot, vc
 from core.god_core import run_core
+from core.logger import log
 
-app = Client(
-    "sehtani_userbot",
-    api_id=API_ID,
-    api_hash=API_HASH,
-    session_string=SESSION,
-    plugins=dict(root="plugins")
-)
+# ========= START SYSTEM =========
 
-@app.on_message()
-async def start_core(client, message):
-    await run_core(client)
+async def start_all():
+    try:
+        # Start userbot
+        await user.start()
+        log("👤 Userbot Started")
 
-print("😈 SEHTANI USERBOT STARTED 💀")
-app.run()
+        # Start bot
+        await bot.start()
+        log("🤖 Bot Started")
+
+        # Start voice client
+        await vc.start()
+        log("🎵 VC Client Started")
+
+        # Start core system
+        await run_core(user)
+
+        log("😈 SEHTANI SYSTEM FULLY STARTED 💀")
+
+    except Exception as e:
+        log(f"❌ Startup Error: {e}")
+
+# ========= MAIN =========
+
+async def main():
+    await start_all()
+    await idle()  # keep running
+
+if __name__ == "__main__":
+    asyncio.run(main())
