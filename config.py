@@ -8,3 +8,9 @@ API_HASH = os.getenv("API_HASH")
 SESSION = os.getenv("SESSION")
 BOT_TOKEN = os.getenv("BOT_TOKEN")    
 MONGO_URL = os.getenv("MONGO_URL")
+
+API_ID=
+API_HASH=
+SESSION=
+BOT_TOKEN=
+MONGO_URL=
